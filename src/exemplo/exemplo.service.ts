@@ -16,7 +16,7 @@ export class ExemploService {
   }
 
   async findById(id: number): Promise<ExemploEntity> {
-    const exemplo = await this.rep.findOne(id);
+    const exemplo = await this.rep.findOne({ where: { id } });
 
     if (exemplo) return exemplo;
 

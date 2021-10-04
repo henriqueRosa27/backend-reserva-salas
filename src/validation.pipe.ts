@@ -45,6 +45,6 @@ export class ValidationNumberPipe implements PipeTransform {
         HttpStatus.BAD_REQUEST,
       );
     }
-    return 1;
+    return value;
   }
 }
