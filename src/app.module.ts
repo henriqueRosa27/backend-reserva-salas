@@ -3,8 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConnectionOptions } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ExemploEntity } from './exemplo/exemplo.entity';
-import { ExemploModule } from './exemplo/exemplo.module';
+import { PredioEntity } from './predio/predio.entity';
+import { PredioModule } from './predio/predio.module';
+import { SalaEntity } from './sala/sala.entity';
+import { SalaModule } from './sala/sala.module';
 
 const configDatabase: ConnectionOptions = {
   type: 'postgres',
@@ -16,11 +18,11 @@ const configDatabase: ConnectionOptions = {
   ssl: {
     rejectUnauthorized: false,
   },
-  entities: [ExemploEntity],
+  entities: [PredioEntity, SalaEntity]
 };
 
 @Module({
-  imports: [TypeOrmModule.forRoot(configDatabase), ExemploModule],
+  imports: [TypeOrmModule.forRoot(configDatabase), SalaModule , PredioModule],
   controllers: [AppController],
   providers: [AppService],
 })
