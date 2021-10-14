@@ -1,10 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('exemplo')
-export class ExemploEntity {
+@Entity('predio')
+export class PredioEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'nome' })
+  @Column({ name: 'nome'})
   nome: string;
+
+  @Column({ name: 'status'})
+  status: boolean;
 }
