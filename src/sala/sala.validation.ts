@@ -5,9 +5,6 @@ export const salaValidation = Yup.object({
         .required('Campo obrigatório')
         .max(100, 'Máximo de 100 caracteres'),
 
-    numero_sala: Yup.number()
-        .max(3, 'Máximo de 3 dígitos'),
-
     equipamento: Yup.string()
         .max(100, 'Máximo de 100 caracteres'),
 
@@ -29,5 +26,6 @@ export const salaValidation = Yup.object({
 
     capacidade: Yup.number()
         .required('Campo obrigatório')
-        .max(3, 'Máximo de 3 dígitos'),
+        .positive('Somente valores positivos')
+        .max(999, 'Máximo de 3 dígitos'),
 });
