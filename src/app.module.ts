@@ -5,6 +5,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ExemploEntity } from './exemplo/exemplo.entity';
 import { ExemploModule } from './exemplo/exemplo.module';
+import { PredioModule } from './predio/predio.module';
+import { PredioEntity } from './predio/predio.entity';
+import { SalasModule } from './salas/salas.module';
+import { SalasEntity} from './salas/salas.entity';
 
 const configDatabase: ConnectionOptions = {
   type: 'postgres',
@@ -16,11 +20,11 @@ const configDatabase: ConnectionOptions = {
   ssl: {
     rejectUnauthorized: false,
   },
-  entities: [ExemploEntity],
+  entities: [ExemploEntity, PredioEntity, SalasEntity],
 };
 
 @Module({
-  imports: [TypeOrmModule.forRoot(configDatabase), ExemploModule],
+  imports: [TypeOrmModule.forRoot(configDatabase), ExemploModule, PredioModule, SalasModule],
   controllers: [AppController],
   providers: [AppService],
 })
