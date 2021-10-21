@@ -10,4 +10,3 @@ import { PredioEntity } from './predio.entity';
   controllers: [PredioController],
 })
 export class PredioModule {}
-
