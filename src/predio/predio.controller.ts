@@ -31,9 +31,9 @@ export class PredioController {
 
   @Post()
   async create(
-    @Body(new ValidationPipe(predioValidation)) exemplo: PredioEntity,
+    @Body(new ValidationPipe(predioValidation)) predio: PredioEntity,
   ): Promise<PredioEntity> {
-    return await this.service.create(exemplo);
+    return await this.service.create(predio);
   }
 
   @Put(':id')

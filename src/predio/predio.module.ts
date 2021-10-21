@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PredioService } from './predio.service';
 import { PredioController } from './predio.controller';
 import { PredioEntity } from './predio.entity';
-import { PredioService } from './predio.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([PredioEntity])],
-    providers: [PredioService],
-    controllers: [PredioController],
+  imports: [TypeOrmModule.forFeature([PredioEntity])],
+  providers: [PredioService],
+  controllers: [PredioController],
 })
 export class PredioModule {}
