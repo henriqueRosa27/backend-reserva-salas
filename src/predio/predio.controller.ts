@@ -11,7 +11,8 @@ import {
 import { ValidationNumberPipe, ValidationPipe } from 'src/validation.pipe';
 import { PredioEntity } from './predio.entity';
 import { PredioService } from './predio.service';
-import { predioValidation } from './predio.validation';
+import { predioValidation, altera_statusValidation } from './predio.validation';
+
 
 @Controller('predios')
 export class PredioController {
@@ -34,6 +35,14 @@ export class PredioController {
     @Body(new ValidationPipe(predioValidation)) predio: PredioEntity,
   ): Promise<PredioEntity> {
     return await this.service.create(predio);
+  }
+
+  @Put(':id/altera-status')
+  async altera_status(
+    @Body(new ValidationPipe(altera_statusValidation)) dto: PredioEntity,
+    @Param('id') id: number,
+  ): Promise<PredioEntity> {
+    return await this.service.altera_status(dto, id);
   }
 
   @Put(':id')
