@@ -31,6 +31,14 @@ export class PredioService {
     
         return entity;
       }
+       async altera_status(predio: PredioEntity, id: number): Promise<PredioEntity> {
+        const entitySalva = await this.findById(id);
+    
+        entitySalva.status = predio.status;
+        const entity = await this.rep.save(entitySalva);
+        return entity;
+
+      }
     
       async update(predio: PredioEntity, id: number): Promise<PredioEntity> {
         const entitySalva = await this.findById(id);

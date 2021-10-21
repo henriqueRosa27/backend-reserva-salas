@@ -7,3 +7,7 @@ export const predioValidation = Yup.object({
     status: Yup.boolean()
     .required('Campo obrigatório'),
 });
+export const altera_statusValidation = Yup.object({
+      status: Yup.boolean()
+    .required('Campo obrigatório'),
+});
