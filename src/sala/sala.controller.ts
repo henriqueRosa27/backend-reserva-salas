@@ -9,38 +9,38 @@ import {
     Put,
   } from '@nestjs/common';
 import { ValidationNumberPipe, ValidationPipe } from 'src/validation.pipe';
-import { PredioEntity } from './predio.entity';
-import { PredioService } from './predio.service';
-import { predioValidation } from './predio.validation';
+import { SalaEntity } from './sala.entity';
+import { SalaService } from './sala.service';
+import { salaValidation } from './sala.validation';
 
-@Controller('predios')
-export class PredioController {
-    constructor(private readonly service: PredioService) {}
+@Controller('salas')
+export class SalaController {
+    constructor(private readonly service: SalaService) {}
 
   @Get()
-  async getAll(): Promise<PredioEntity[]> {
+  async getAll(): Promise<SalaEntity[]> {
     return this.service.getAll();
   }
 
   @Get(':id')
   async finById(
     @Param('id', ValidationNumberPipe) id: number,
-  ): Promise<PredioEntity> {
+  ): Promise<SalaEntity> {
     return await this.service.findById(id);
   }
 
   @Post()
   async create(
-    @Body(new ValidationPipe(predioValidation)) predio: PredioEntity,
-  ): Promise<PredioEntity> {
-    return await this.service.create(predio);
+    @Body(new ValidationPipe(salaValidation)) sala: SalaEntity,
+  ): Promise<SalaEntity> {
+    return await this.service.create(sala);
   }
 
   @Put(':id')
   async update(
-    @Body(new ValidationPipe(predioValidation)) dto: PredioEntity,
+    @Body(new ValidationPipe(salaValidation)) dto: SalaEntity,
     @Param('id') id: number,
-  ): Promise<PredioEntity> {
+  ): Promise<SalaEntity> {
     return await this.service.update(dto, id);
   }
 

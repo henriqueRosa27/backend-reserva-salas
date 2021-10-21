@@ -5,9 +5,9 @@ export class PredioEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'nome' })
+  @Column({ name: 'nome'})
   nome: string;
-  
-  @Column({name: 'status' })
+
+  @Column({ name: 'status'})
   status: boolean;
 }
