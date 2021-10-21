@@ -32,19 +32,27 @@ export class SalaService {
     
         return entity;
       }
+      async altera_status(sala: SalaEntity, id: number): Promise<SalaEntity> {
+        const entitySalva = await this.findById(id);
+    
+        entitySalva.status = sala.status;
+        const entity = await this.rep.save(entitySalva);
+        return entity;
+
+      }
     
       async update(sala: SalaEntity, id: number): Promise<SalaEntity> {
         const entitySalva = await this.findById(id);
     
         entitySalva.nome = sala.nome;
-        entitySalva.intervalo = sala.intervalo;
+        entitySalva.intervalo_inicio = sala.intervalo_inicio;
+        entitySalva.intervalo_fim = sala.intervalo_fim;
         entitySalva.andar = sala.andar;
+        entitySalva.status= sala.status;
+        entitySalva.predio_id=sala.predio_id;
         entitySalva.capacidade = sala.capacidade;
-        entitySalva.local = sala.local;
-        entitySalva.numero_sala = sala.numero_sala;
-        entitySalva.sala_especial = sala.sala_especial;
-        entitySalva.acessibilidade = sala.acessibilidade;
-        entitySalva.equipamento = sala.equipamento;
+        entitySalva.salas_especiais = sala.salas_especiais;
+        entitySalva.equipamentos = sala.equipamentos;
         const entity = await this.rep.save(entitySalva);
         return entity;
       }

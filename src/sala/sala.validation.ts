@@ -3,29 +3,42 @@ import * as Yup from 'yup';
 export const salaValidation = Yup.object({
     nome: Yup.string()
         .required('Campo obrigatório')
-        .length(100, 'Máximo de 100 caracteres'),
+        .max(50, 'Máximo de 50 caracteres'),
 
-    equipamento: Yup.string()
-        .length(100, 'Máximo de 100 caracteres'),
+    equipamentos: Yup.string()
+        .required('Campo Obrigatório')
+        .max(500, 'Máximo de 500 caracteres'),
 
     andar: Yup.number()
-        .required('Campo obrigatório'),
-
-    intervalo: Yup.string()
         .required('Campo obrigatório')
-        .length(20, 'Máximo de 20 caracteres'),
+        .max(9, 'Valor maximo 9')
+        .min(-9, 'Valor minimo -9'),
 
-    acessibilidade: Yup.boolean()
+    intervalo_fim: Yup.string()
+        .required('Campo obrigatório')
+        .max(5, 'Máximo de 5 caracteres'),
+
+    intervalo_inicio: Yup.string()
+        .required('Campo obrigatório')
+        .max(5, 'Máximo de 5 caracteres'),
+
+    status: Yup.boolean()
         .required('Campo obrigatório'),
 
-    local: Yup.string()
-        .required('Campo obrigatório'),
+    predio_id: Yup.number()
+        .required('Campo obrigatório')
+        .positive('Id invalido'),
 
-    sala_especial: Yup.string()
-        .length(100, 'Máximo de 100 caracteres'),
+    salas_especiais: Yup.string()
+        .max(150, 'Máximo de 150 caracteres'),
 
     capacidade: Yup.number()
         .required('Campo obrigatório')
         .positive('Somente valores positivos')
         .max(999, 'Máximo de 3 dígitos'),
+});
+
+export const altera_statusValidation = Yup.object({
+    status: Yup.boolean()
+    .required('Campo obrigatório'),
 });
