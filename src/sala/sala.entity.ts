@@ -8,17 +8,23 @@ export class SalaEntity {
   @Column({ name: 'nome'}) 
   nome: string;
 
-  @Column({ name: 'intervalo'}) 
-  intervalo: string; // atenção!!!!!!!
+  @Column({ name: 'inicio_intervalo'}) 
+  intervalo_inicio: string; // atenção!!!!!!!
+  
+  @Column({ name: 'status'}) 
+  status: boolean;
 
-  @Column({ name: 'equipamento'}) 
-  equipamento: string;
+  @Column({ name: 'predio_id'}) 
+  predio_id: number;
 
-  @Column({ name: 'sala_especial'}) 
-  sala_especial: string;
+  @Column({ name: 'fim_intervalo'}) 
+  intervalo_fim: string;
 
-  @Column({ name: 'numero_sala'}) 
-  numero_sala: number;
+  @Column({ name: 'equipamentos'}) 
+  equipamentos: string;
+
+  @Column({ name: 'salas_especiais'}) 
+  salas_especiais: string;
 
   @Column({ name: 'andar'}) 
   andar: number;
@@ -26,9 +32,5 @@ export class SalaEntity {
   @Column({ name: 'capacidade'}) 
   capacidade: number;
 
-  @Column({ name: 'acessibilidade'}) 
-  acessibilidade: boolean;
-
-  @Column({ name: 'local'}) 
-  local: string; // atenção!!!!!!
+  
 }

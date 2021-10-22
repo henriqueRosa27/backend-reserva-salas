@@ -11,7 +11,7 @@ import {
 import { ValidationNumberPipe, ValidationPipe } from 'src/validation.pipe';
 import { SalaEntity } from './sala.entity';
 import { SalaService } from './sala.service';
-import { salaValidation } from './sala.validation';
+import { salaValidation, altera_statusValidation } from './sala.validation';
 
 @Controller('salas')
 export class SalaController {
@@ -34,6 +34,14 @@ export class SalaController {
     @Body(new ValidationPipe(salaValidation)) sala: SalaEntity,
   ): Promise<SalaEntity> {
     return await this.service.create(sala);
+  }
+
+  @Put(':id/altera-status')
+  async altera_status(
+    @Body(new ValidationPipe(altera_statusValidation)) dto: SalaEntity,
+    @Param('id') id: number,
+  ): Promise<SalaEntity> {
+    return await this.service.altera_status(dto, id);
   }
 
   @Put(':id')
