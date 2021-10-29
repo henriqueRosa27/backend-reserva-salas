@@ -19,7 +19,7 @@ export const salasValidation = Yup.object({
     .required('Campo obrigatório')
     .max(20, 'Máximo de 20 caracteres'),
 
-  salasEspeciais: Yup.string().max(100, 'Máximo de 100 caracteres'),
+  salas_especiais: Yup.string().max(100, 'Máximo de 100 caracteres'),
 
   capacidade: Yup.number()
     .required('Campo obrigatório')

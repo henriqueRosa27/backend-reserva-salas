@@ -8,29 +8,29 @@ export class SalasEntity {
   @Column({ name: 'nome' })
   nome: string;
 
-  @Column({name:'andar'})
-  andar:string;
+  @Column({ name: 'andar' })
+  andar: string;
 
-  @Column({name: 'equipamentos'})
+  @Column({ name: 'equipamentos' })
   equipamentos: string;
 
- // @Column({name:'acessibilidade'})
+  // @Column({name:'acessibilidade'})
   //acessibilidade: boolean;
 
- // @Column({name: 'predio'})
+  // @Column({name: 'predio'})
   //predio: string;
-  @Column ({name: 'predio_id'})
+  @Column({ name: 'predio_id' })
   predio_id: number;
-  
-  @Column({name: 'status'})
+
+  @Column({ name: 'status' })
   status_sala: boolean;
 
-  @Column({name: 'intervalo'})
+  @Column({ name: 'intervalo' })
   intervalo: string;
 
-  @Column({name: 'salas_especiais'})
+  @Column({ name: 'salas_especiais' })
   salas_especiais: string;
 
-  @Column({name: 'capacidade' })
+  @Column({ name: 'capacidade' })
   capacidade: number;
 }
