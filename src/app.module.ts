@@ -7,6 +7,8 @@ import { PredioEntity } from './predio/predio.entity';
 import { PredioModule } from './predio/predio.module';
 import { SalaEntity } from './sala/sala.entity';
 import { SalaModule } from './sala/sala.module';
+import { EquipamentoEntity } from './equipamento/equipamento.entity';
+import { EquipamentoModule } from './equipamento/equipamento.module';
 
 const configDatabase: ConnectionOptions = {
   type: 'postgres',
@@ -18,11 +20,11 @@ const configDatabase: ConnectionOptions = {
   ssl: {
     rejectUnauthorized: false,
   },
-  entities: [PredioEntity, SalaEntity]
+  entities: [PredioEntity, SalaEntity, EquipamentoEntity]
 };
 
 @Module({
-  imports: [TypeOrmModule.forRoot(configDatabase), SalaModule , PredioModule],
+  imports: [TypeOrmModule.forRoot(configDatabase), SalaModule , PredioModule, EquipamentoModule],
   controllers: [AppController],
   providers: [AppService],
 })
