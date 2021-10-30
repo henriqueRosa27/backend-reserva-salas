@@ -22,9 +22,12 @@ export const salaValidation = Yup.object({
     .required('Campo obrigatório')
     .max(5, 'Máximo de 5 caracteres'),
 
-  predio_id: Yup.number().required('Campo obrigatório').positive('Id invalido'),
+  predio_id: Yup.number()
+  .required('Campo obrigatório')
+  .positive('Id invalido'),
 
-  salas_especiais: Yup.string().max(150, 'Máximo de 150 caracteres'),
+  salas_especiais: Yup.string()
+  .max(150, 'Máximo de 150 caracteres'),
 
   capacidade: Yup.number()
     .required('Campo obrigatório')
@@ -33,5 +36,6 @@ export const salaValidation = Yup.object({
 });
 
 export const altera_statusValidation = Yup.object({
-  status: Yup.boolean().required('Campo obrigatório'),
+  status: Yup.boolean()
+  .required('Campo obrigatório'),
 });

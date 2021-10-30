@@ -22,7 +22,7 @@ export class SalaService {
         if (sala) return sala;
     
         throw new HttpException(
-          { erro: 'Exemplo não existe' },
+          { erro: 'Sala não existe' },
           HttpStatus.NOT_FOUND,
         );
       }

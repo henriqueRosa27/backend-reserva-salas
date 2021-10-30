@@ -21,7 +21,7 @@ export class PredioService {
         if (predio) return predio;
     
         throw new HttpException(
-          { erro: 'Exemplo não existe' },
+          { erro: 'Predio não existe' },
           HttpStatus.NOT_FOUND,
         );
       }
