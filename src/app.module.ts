@@ -20,11 +20,16 @@ const configDatabase: ConnectionOptions = {
   ssl: {
     rejectUnauthorized: false,
   },
-  entities: [PredioEntity, SalaEntity, EquipamentoEntity]
+  entities: [PredioEntity, SalaEntity, EquipamentoEntity],
 };
 
 @Module({
-  imports: [TypeOrmModule.forRoot(configDatabase), SalaModule , PredioModule, EquipamentoModule],
+  imports: [
+    TypeOrmModule.forRoot(configDatabase),
+    SalaModule,
+    PredioModule,
+    EquipamentoModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
