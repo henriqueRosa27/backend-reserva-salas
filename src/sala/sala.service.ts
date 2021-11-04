@@ -28,13 +28,14 @@ export class SalaService {
       }
     
       async create(sala: SalaEntity): Promise<SalaEntity> {
+       // await this.checkName(sala.nome, sala.predio_id);
         const entity = await this.rep.save(sala);
     
         return entity;
       }
       async altera_status(sala: SalaEntity, id: number): Promise<SalaEntity> {
         const entitySalva = await this.findById(id);
-    
+  
         entitySalva.status = sala.status;
         const entity = await this.rep.save(entitySalva);
         return entity;
@@ -43,7 +44,7 @@ export class SalaService {
     
       async update(sala: SalaEntity, id: number): Promise<SalaEntity> {
         const entitySalva = await this.findById(id);
-    
+       // await this.checkName(sala.nome, sala.predio_id, id);
         entitySalva.nome = sala.nome;
         entitySalva.intervalo_inicio = sala.intervalo_inicio;
         entitySalva.intervalo_fim = sala.intervalo_fim;
@@ -64,4 +65,30 @@ export class SalaService {
     
         return null;
       }
+
+      // async checkName(nome: string, idPredio: number, id?: number): Promise<void> {
+      //   let query = this.rep.createQueryBuilder("sala").where("sala.nome=:NOME", {NOME: nome});
+      //   let queryPredio = this.rep.createQueryBuilder("predio").where("predio.id=:IDPREDIO", {IDPREDIO: idPredio});
+      //   const resultPredio = await queryPredio.getOne();
+
+      //   if(resultPredio) {
+      //     if(id) {
+      //       query = query.andWhere("sala.id<>:ID", {ID: id});
+      //     }
+      //     const result = await query.getOne()
+          
+      //     if(result) {
+      //       throw new HttpException(
+      //         { erro: 'Sala já existe!' },
+      //         HttpStatus.BAD_REQUEST,
+      //       );
+      //     }
+      //   }
+      //   else {
+      //     throw new HttpException(
+      //       { erro: 'Predio não existe!' },
+      //       HttpStatus.BAD_REQUEST,
+      //     );
+      //   }
+      //}
 }
