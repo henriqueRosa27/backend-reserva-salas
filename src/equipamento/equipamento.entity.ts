@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { AgendarEntity } from "src/agendar/agendar.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
 
 @Entity('equipamentos')
 export class EquipamentoEntity{
@@ -13,4 +14,12 @@ export class EquipamentoEntity{
 
     @Column({ name: 'status' })
     status: boolean;
+
+    @ManyToMany(() => AgendarEntity, agendamentos => agendamentos.equipamentos)
+    @JoinTable({
+      name: "agendamento_equipamento",
+      joinColumn: { name: "agendamento_id" },
+      inverseJoinColumn: { name: "equipamento_id" },
+    })
+    agendamentos: AgendarEntity[];
 }
