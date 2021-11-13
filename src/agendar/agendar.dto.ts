@@ -1,22 +1,19 @@
 export class CriarAgendardto {
+  data_inicial: Date;
 
-    data_inicial: Date;
+  data_final: Date;
 
-    data_final: Date;
+  sala_id: number;
 
-    sala_id: number;
+  responsavel: string;
 
-    responsavel: string;
+  observacao: string;
 
-    observacao: string;
+  status: boolean;
 
-    status: boolean;
+  nome_evento: string;
 
-    nome_evento: string;
+  quantidade_pessoas: number;
 
-    quantidade_pessoas: number;
-
-    equipamentos: number[ ];
-
-
+  equipamentos: number[];
 }
