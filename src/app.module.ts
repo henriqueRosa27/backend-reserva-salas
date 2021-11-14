@@ -9,6 +9,8 @@ import { SalaEntity } from './sala/sala.entity';
 import { SalaModule } from './sala/sala.module';
 import { EquipamentoEntity } from './equipamento/equipamento.entity';
 import { EquipamentoModule } from './equipamento/equipamento.module';
+import { AgendarEntity } from './agendar/agendar.entity';AgendarEntity
+import { AgendarModule } from './agendar/agendar.module';
 
 const configDatabase: ConnectionOptions = {
   type: 'postgres',
@@ -20,7 +22,7 @@ const configDatabase: ConnectionOptions = {
   ssl: {
     rejectUnauthorized: false,
   },
-  entities: [PredioEntity, SalaEntity, EquipamentoEntity],
+  entities: [PredioEntity, SalaEntity, EquipamentoEntity, AgendarEntity],
 };
 
 @Module({
@@ -29,6 +31,7 @@ const configDatabase: ConnectionOptions = {
     SalaModule,
     PredioModule,
     EquipamentoModule,
+    AgendarModule,
   ],
   controllers: [AppController],
   providers: [AppService],

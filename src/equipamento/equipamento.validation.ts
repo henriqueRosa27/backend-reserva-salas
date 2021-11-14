@@ -7,12 +7,14 @@ export const EquipamentoValidation = Yup.object({
 
   quantidade: Yup.number()
     .required('Campo quantiade obrigatório')
-    .max(99, 'Máximo e 99 equipamentos no campo quantidade')
+    .max(99, 'Máximo de 99 equipamentos no campo quantidade')
     .positive('Somente valores positivos no campo quantidade'),
 
-  status: Yup.boolean().required('Campo status obrigatório'),
+  status: Yup.boolean()
+  .required('Campo status obrigatório'),
 });
 
 export const altera_statusValidation = Yup.object({
-  status: Yup.boolean().required('Campo status obrigatório'),
+  status: Yup.boolean()
+  .required('Campo status obrigatório'),
 });
