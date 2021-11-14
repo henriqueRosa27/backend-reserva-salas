@@ -9,7 +9,7 @@ import { SalaEntity } from './sala/sala.entity';
 import { SalaModule } from './sala/sala.module';
 import { EquipamentoEntity } from './equipamento/equipamento.entity';
 import { EquipamentoModule } from './equipamento/equipamento.module';
-import { AgendarEntity } from './agendar/agendar.entity';AgendarEntity
+import { AgendarEntity } from './agendar/agendar.entity';
 import { AgendarModule } from './agendar/agendar.module';
 
 const configDatabase: ConnectionOptions = {

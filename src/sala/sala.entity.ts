@@ -9,7 +9,7 @@ export class SalaEntity {
   nome: string;
 
   @Column({ name: 'inicio_intervalo' })
-  intervalo_inicio: Date;
+  intervalo_inicio: string;
 
   @Column({ name: 'status' })
   status: boolean;
@@ -18,7 +18,7 @@ export class SalaEntity {
   predio_id: number;
 
   @Column({ name: 'fim_intervalo' })
-  intervalo_fim: Date;
+  intervalo_fim: string;
 
   @Column({ name: 'equipamentos' })
   equipamentos: string;
