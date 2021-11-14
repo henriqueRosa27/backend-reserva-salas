@@ -14,13 +14,10 @@ export const salaValidation = Yup.object({
     .max(9, 'Valor maximo 9 no campo andar')
     .min(-9, 'Valor minimo -9 no campo andar'),
 
-  intervalo_fim: Yup.string()
-    .required('Campo intervalo obrigatório')
-    .max(5, 'Máximo de 5 caracteres no campo intervalo'),
+  intervalo_fim: Yup.date(),
+    
 
-  intervalo_inicio: Yup.string()
-    .required('Campo intervalo obrigatório')
-    .max(5, 'Máximo de 5 caracteres no intervalo'),
+  intervalo_inicio: Yup.date(),
 
   predio_id: Yup.number()
     .required('Campo predio obrigatório')
