@@ -24,6 +24,7 @@ export class AgendarService {
 
     if (agenda) return agenda;
 
+
     
     throw new HttpException(
       { erro: 'Agendamento não existe' },
