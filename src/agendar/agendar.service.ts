@@ -51,9 +51,9 @@ export class AgendarService {
         data.id = equipamento;
         return data;
       }) || [];
-    //const entity = await this.rep.save(agenda);
+    const entity = await this.rep.save(agenda);
 
-    return new AgendarEntity();
+    return entity;
   }
 
   async altera_status(
@@ -76,12 +76,16 @@ export class AgendarService {
     }
   }
   async checkAgenda(dto: CriarAgendardto, Id?: number): Promise<void> {
+    const betweenDataInicial =
+      ':DATA_INICIAL BETWEEN agendamento.data_inicial AND  agendamento.data_final';
+    const betweenDataFianl =
+      ':DATA_fINAL BETWEEN agendamento.data_inicial AND  agendamento.data_final';
     let query = this.rep
       .createQueryBuilder('agendamento')
-      .where(
-        ':DATA_INICIAL BETWEEN agendamento.data_inicial AND  agendamento.data_final',
-        { DATA_INICIAL: dto.data_inicial.toISOString() },
-      )
+      .where(`(${betweenDataInicial} OR ${betweenDataFianl})`, {
+        DATA_INICIAL: dto.data_inicial.toISOString(),
+        DATA_fINAL: dto.data_final.toISOString(),
+      })
       .andWhere('agendamento.sala_id=:SALAID', { SALAID: dto.sala_id });
 
     if (Id) {
