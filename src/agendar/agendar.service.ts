@@ -23,8 +23,6 @@ export class AgendarService {
     const agenda = await this.rep.findOne({ where: { id } });
 
     if (agenda) return agenda;
-
-
     
     throw new HttpException(
       { erro: 'Agendamento não existe' },
