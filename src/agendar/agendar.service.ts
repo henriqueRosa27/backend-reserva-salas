@@ -99,6 +99,7 @@ export class AgendarService {
         { erro: 'Sala já esta agendada!' },
         HttpStatus.BAD_REQUEST,
       );
+    
     }
   }
 }
