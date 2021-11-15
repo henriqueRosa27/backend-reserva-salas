@@ -93,13 +93,12 @@ export class AgendarService {
       query = query.andWhere("agendamento.id<>:ID", {ID:Id});
     }
     const result = await query.getOne()
-    
     if(result) {
+
       throw new HttpException(
         { erro: 'Sala já esta agendada!' },
         HttpStatus.BAD_REQUEST,
       );
-    
     }
   }
 }
