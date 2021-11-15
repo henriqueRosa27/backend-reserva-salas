@@ -7,11 +7,11 @@ export const AgendarValidation = Yup.object({
   data_final: Yup.date().required('Campo data final obrigatório'),
 
   sala_id: Yup.number()
-    .required('Campo predio obrigatório')
+    .required('Campo sala obrigatório')
     .positive('Valor deve ser positivo no campo sala'),
 
   responsavel: Yup.string()
-    .required('Campo quantiade obrigatório')
+    .required('Campo nome do responsavél obrigatório')
     .max(100, 'Máximo de 100 caracteres no campo responsável'),
 
   observacao: Yup.string().max(
@@ -26,7 +26,7 @@ export const AgendarValidation = Yup.object({
     .max(100, 'Máximo de 100 caracteres'),
 
   quantidade_pessoas: Yup.number()
-    .required('Campo predio obrigatório')
+    .required('Campo quantidade de pessoas obrigatório')
     .positive('Valor deve ser positivo')
     .max(999, 'Máximo de 999 pessoas'),
 });

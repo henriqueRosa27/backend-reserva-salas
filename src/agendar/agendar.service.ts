@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { AfterInsert, Between, Repository } from 'typeorm';
 import { AgendarEntity } from './agendar.entity';
 import { CriarAgendardto } from './agendar.dto';
 import { EquipamentoEntity } from 'src/equipamento/equipamento.entity';
-import { number } from 'yup/lib/locale';
+import *as moment from 'moment';
 
 @Injectable()
 export class AgendarService {
@@ -33,6 +33,8 @@ export class AgendarService {
   async create(dto: CriarAgendardto): Promise<AgendarEntity> {
     const agenda = new AgendarEntity();
     await this.checkId(dto);
+    await this.checkDate(dto);
+    await this.checkAgenda(dto);
 
     agenda.data_inicial = dto.data_inicial;
     agenda.data_final = dto.data_final;
@@ -73,5 +75,30 @@ export class AgendarService {
         );
       }
     });
+  }
+  async checkDate(dto: CriarAgendardto): Promise<void> {
+   if (moment(dto.data_inicial).isAfter(dto.data_final)){
+      throw new HttpException(
+        { erro: 'Data inválida: data deverá ser maior que à data inicial!' },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+  }
+  async checkAgenda(dto:CriarAgendardto, Id?:number): Promise<void> {
+    let query = this.rep.createQueryBuilder("agendamento")
+    .where(":data_inicial BETWEEN agendamento.data_inicial AND  agendamento.data_final", {DATA_INICIAL : dto.data_inicial.toISOString()})
+    .andWhere("agendamento.sala_id=:SALAID", {SALAID: dto.sala_id})
+    
+    if(Id) {
+      query = query.andWhere("agendamento.id<>:ID", {ID:Id});
+    }
+    const result = await query.getOne()
+    
+    if(result) {
+      throw new HttpException(
+        { erro: 'Sala já esta agendada!' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
