@@ -18,6 +18,7 @@ export class AgendarEntity {
   @Column({ name: 'data_final' })
   data_final: Date;
 
+  
   @Column({ name: 'sala_id' })
   sala_id: number;
 
