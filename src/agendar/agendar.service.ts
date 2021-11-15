@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AfterInsert, Between, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { AgendarEntity } from './agendar.entity';
 import { CriarAgendardto } from './agendar.dto';
 import { EquipamentoEntity } from 'src/equipamento/equipamento.entity';
-import *as moment from 'moment';
+import * as moment from 'moment';
 
 @Injectable()
 export class AgendarService {
@@ -23,7 +23,7 @@ export class AgendarService {
     const agenda = await this.rep.findOne({ where: { id } });
 
     if (agenda) return agenda;
-    
+
     throw new HttpException(
       { erro: 'Agendamento não existe' },
       HttpStatus.NOT_FOUND,
@@ -32,7 +32,8 @@ export class AgendarService {
 
   async create(dto: CriarAgendardto): Promise<AgendarEntity> {
     const agenda = new AgendarEntity();
-    await this.checkId(dto);
+    dto.data_inicial = this.setDataHora(dto.data_inicial);
+    dto.data_final = this.setDataHora(dto.data_final);
     await this.checkDate(dto);
     await this.checkAgenda(dto);
 
@@ -50,9 +51,9 @@ export class AgendarService {
         data.id = equipamento;
         return data;
       }) || [];
-    const entity = await this.rep.save(agenda);
+    //const entity = await this.rep.save(agenda);
 
-    return entity;
+    return new AgendarEntity();
   }
 
   async altera_status(
@@ -66,43 +67,38 @@ export class AgendarService {
     return entity;
   }
 
-  async checkId(dto: CriarAgendardto): Promise<void> {
-    dto.equipamentos.map((equipamentos) => {
-      if (isNaN(equipamentos)) {
-        throw new HttpException(
-          { erro: `${equipamentos}: Deve ser um número!` },
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-    });
-  }
   async checkDate(dto: CriarAgendardto): Promise<void> {
-   if (moment(dto.data_inicial).isAfter(dto.data_final)){
+    if (moment(dto.data_inicial).isAfter(dto.data_final)) {
       throw new HttpException(
         { erro: 'Data inválida: data deverá ser maior que à data inicial!' },
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-  }
-  async checkAgenda(dto:CriarAgendardto, Id?:number): Promise<void> {
-    let query = this.rep.createQueryBuilder("agendamento")
-    .where(":data_inicial BETWEEN agendamento.data_inicial AND  agendamento.data_final", {DATA_INICIAL : dto.data_inicial.toISOString()})
-    .andWhere("agendamento.sala_id=:SALAID", {SALAID: dto.sala_id})
-    
-    if(Id) {
-      query = query.andWhere("agendamento.id<>:ID", {ID:Id});
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    const result = await query.getOne()
-    if(result) {
+  }
+  async checkAgenda(dto: CriarAgendardto, Id?: number): Promise<void> {
+    let query = this.rep
+      .createQueryBuilder('agendamento')
+      .where(
+        ':DATA_INICIAL BETWEEN agendamento.data_inicial AND  agendamento.data_final',
+        { DATA_INICIAL: dto.data_inicial.toISOString() },
+      )
+      .andWhere('agendamento.sala_id=:SALAID', { SALAID: dto.sala_id });
 
-
-
-
-      
+    if (Id) {
+      query = query.andWhere('agendamento.id<>:ID', { ID: Id });
+    }
+    const result = await query.getOne();
+    if (result) {
       throw new HttpException(
         { erro: 'Sala já esta agendada!' },
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  private setDataHora(dataHora: Date): Date {
+    const novaDataHora = new Date(dataHora);
+    novaDataHora.setHours(novaDataHora.getHours() - 3);
+    return novaDataHora;
   }
 }
