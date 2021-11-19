@@ -25,6 +25,7 @@ export class SalaService {
 
   async create(sala: SalaEntity): Promise<SalaEntity> {
     await this.checkName(sala.nome, sala.predio_id);
+
     const entity = await this.rep.save(sala);
 
     return entity;

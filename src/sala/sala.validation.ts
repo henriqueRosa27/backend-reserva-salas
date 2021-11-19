@@ -24,8 +24,10 @@ export const salaValidation = Yup.object({
     .required('Campo predio obrigatório')
     .positive('Valor deve ser positivo no campo predio'),
 
-  salas_especiais: Yup.string()
-  .max(150,  'Máximo de 150 caracteres campo salas especiais'),
+  salas_especiais: Yup.string().max(
+    150,
+    'Máximo de 150 caracteres campo salas especiais',
+  ),
 
   capacidade: Yup.number()
     .required('Campo capacidade obrigatório')
@@ -41,6 +43,5 @@ export const salaValidation = Yup.object({
   });
 
 export const altera_statusValidation = Yup.object({
-  status: Yup.boolean()
-  .required('Campo status obrigatório'),
+  status: Yup.boolean().required('Campo status obrigatório'),
 });
