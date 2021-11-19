@@ -70,7 +70,7 @@ export class AgendarService {
   async checkDate(dto: CriarAgendardto): Promise<void> {
     if (moment(dto.data_inicial).isAfter(dto.data_final)) {
       throw new HttpException(
-        { erro: 'Data inválida: data deverá ser maior que à data inicial!' },
+        { erro: 'Data inválida: data final deverá ser maior que à data inicial!' },
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -83,8 +83,8 @@ export class AgendarService {
     let query = this.rep
       .createQueryBuilder('agendamento')
       .where(`(${betweenDataInicial} OR ${betweenDataFianl})`, {
-        DATA_INICIAL: dto.data_inicial.toISOString(),
-        DATA_fINAL: dto.data_final.toISOString(),
+        DATA_INICIAL: moment(dto.data_inicial).format(),
+        DATA_fINAL: moment(dto.data_final).format(),
       })
       .andWhere('agendamento.sala_id=:SALAID', { SALAID: dto.sala_id });
 
@@ -102,7 +102,12 @@ export class AgendarService {
 
   private setDataHora(dataHora: Date): Date {
     const novaDataHora = new Date(dataHora);
-    novaDataHora.setHours(novaDataHora.getHours() - 3);
+    //novaDataHora.setHours(novaDataHora.getHours() - 3);
     return novaDataHora;
+  }
+
+  private converteHoraParaConsulta(dataHora:Date): string{
+    dataHora.setHours(dataHora.getHours() - 3);
+    return ""
   }
 }
