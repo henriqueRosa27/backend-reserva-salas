@@ -31,4 +31,7 @@ export class SalaEntity {
 
   @Column({ name: 'capacidade' })
   capacidade: number;
+
+  @Column({ name: 'caracteristicas'})
+  caracteristicas: string;
 }

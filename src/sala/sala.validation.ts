@@ -14,9 +14,11 @@ export const salaValidation = Yup.object({
     .max(9, 'Valor maximo 9 no campo andar')
     .min(-9, 'Valor minimo -9 no campo andar'),
 
-  intervalo_fim: Yup.string().required('Campo inicio do intervalo obrigatório'),
-
-  intervalo_inicio: Yup.string().required('Campo fim do intervalo obrigatório'),
+  intervalo_fim: Yup.string()
+    .max(10, 'Maximo de 10 caracteres'),
+    
+  intervalo_inicio: Yup.string()
+    .max(10, 'Maximo de 10 caracteres'),
 
   predio_id: Yup.number()
     .required('Campo predio obrigatório')
@@ -32,8 +34,13 @@ export const salaValidation = Yup.object({
     .positive('Somente valores positivos no campo capacidade')
     .max(999, 'Máximo de 3 dígitos no campo capacidade'),
 
-  status: Yup.boolean().required('Campo status obrigatório'),
-});
+  status: Yup.boolean()
+  .required('Campo status obrigatório'),
+
+  caracteristicas: Yup.string()
+    .max(500, 'Máximo de 500 caracteres'),
+
+  });
 
 export const altera_statusValidation = Yup.object({
   status: Yup.boolean().required('Campo status obrigatório'),

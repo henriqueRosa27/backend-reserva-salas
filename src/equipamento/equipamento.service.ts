@@ -27,6 +27,7 @@ export class EquipamentoService {
       }
     
       async create(equipamento: EquipamentoEntity): Promise<EquipamentoEntity> {
+        await this.checkName(equipamento.nome_equipamentos);
         const entity = await this.rep.save(equipamento);
     
         return entity;
@@ -57,5 +58,19 @@ export class EquipamentoService {
         await this.rep.remove(entitySalva);
     
         return null;
+      }
+      async checkName(nome_equi: string, id?: number): Promise<void> {
+        let query = this.rep.createQueryBuilder("equipamento").where("equipamento.nome_equipamentos=:NOME", {NOME: nome_equi});
+        if(id) {
+          query = query.andWhere("equipamentos.id<>:ID", {ID: id});
+        }
+        const result = await query.getOne()
+        
+        if(result) {
+          throw new HttpException(
+            { erro: 'Equipamento já existe!' },
+            HttpStatus.BAD_REQUEST,
+          );
+        }
       }
 }

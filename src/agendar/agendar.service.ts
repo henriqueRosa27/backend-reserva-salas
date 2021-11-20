@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { AgendarEntity } from './agendar.entity';
 import { CriarAgendardto } from './agendar.dto';
 import { EquipamentoEntity } from 'src/equipamento/equipamento.entity';
-import { number } from 'yup/lib/locale';
+import * as moment from 'moment';
 
 @Injectable()
 export class AgendarService {
@@ -32,7 +32,10 @@ export class AgendarService {
 
   async create(dto: CriarAgendardto): Promise<AgendarEntity> {
     const agenda = new AgendarEntity();
-    await this.checkId(dto);
+    dto.data_inicial = this.setDataHora(dto.data_inicial);
+    dto.data_final = this.setDataHora(dto.data_final);
+    await this.checkDate(dto);
+    await this.checkAgenda(dto);
 
     agenda.data_inicial = dto.data_inicial;
     agenda.data_final = dto.data_final;
@@ -64,14 +67,47 @@ export class AgendarService {
     return entity;
   }
 
-  async checkId(dto: CriarAgendardto): Promise<void> {
-    dto.equipamentos.map((equipamentos) => {
-      if (isNaN(equipamentos)) {
-        throw new HttpException(
-          { erro: `${equipamentos}: Deve ser um número!` },
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-    });
+  async checkDate(dto: CriarAgendardto): Promise<void> {
+    if (moment(dto.data_inicial).isAfter(dto.data_final)) {
+      throw new HttpException(
+        { erro: 'Data inválida: data final deverá ser maior que à data inicial!' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+  async checkAgenda(dto: CriarAgendardto, Id?: number): Promise<void> {
+    const betweenDataInicial =
+      ':DATA_INICIAL BETWEEN agendamento.data_inicial AND  agendamento.data_final';
+    const betweenDataFianl =
+      ':DATA_fINAL BETWEEN agendamento.data_inicial AND  agendamento.data_final';
+    let query = this.rep
+      .createQueryBuilder('agendamento')
+      .where(`(${betweenDataInicial} OR ${betweenDataFianl})`, {
+        DATA_INICIAL: moment(dto.data_inicial).format(),
+        DATA_fINAL: moment(dto.data_final).format(),
+      })
+      .andWhere('agendamento.sala_id=:SALAID', { SALAID: dto.sala_id });
+
+    if (Id) {
+      query = query.andWhere('agendamento.id<>:ID', { ID: Id });
+    }
+    const result = await query.getOne();
+    if (result) {
+      throw new HttpException(
+        { erro: 'Sala já esta agendada!' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  private setDataHora(dataHora: Date): Date {
+    const novaDataHora = new Date(dataHora);
+    //novaDataHora.setHours(novaDataHora.getHours() - 3);
+    return novaDataHora;
+  }
+
+  private converteHoraParaConsulta(dataHora:Date): string{
+    dataHora.setHours(dataHora.getHours() - 3);
+    return ""
   }
 }
