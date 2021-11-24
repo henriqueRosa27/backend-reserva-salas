@@ -9,6 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ValidationNumberPipe, ValidationPipe } from 'src/validation.pipe';
+import { date } from 'yup/lib/locale';
 import { CriarAgendardto } from './agendar.dto';
 import { AgendarEntity } from './agendar.entity';
 import { AgendarService } from './agendar.service';
@@ -20,6 +21,11 @@ import {
 @Controller('agendamento')
 export class AgendaController {
   constructor(private readonly service: AgendarService) {}
+
+  @Get('/do-dia')
+  async getDados(): Promise<AgendarEntity[]> {
+    return this.service.getDados();
+  }
 
   @Get()
   async getAll(): Promise<AgendarEntity[]> {

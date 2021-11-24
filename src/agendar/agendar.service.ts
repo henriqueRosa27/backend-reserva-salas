@@ -1,6 +1,15 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {
+  Connection,
+  createQueryBuilder,
+  getRepository,
+  LessThanOrEqual,
+  MoreThanOrEqual,
+  Raw,
+  Repository,
+  RepositoryNotFoundError,
+} from 'typeorm';
 import { AgendarEntity } from './agendar.entity';
 import { CriarAgendardto } from './agendar.dto';
 import { EquipamentoEntity } from 'src/equipamento/equipamento.entity';
@@ -12,6 +21,24 @@ export class AgendarService {
     @InjectRepository(AgendarEntity)
     private readonly rep: Repository<AgendarEntity>,
   ) {}
+
+  async getDados(): Promise<AgendarEntity[]> {
+    const dataAtual = moment(new Date());
+
+    const query = await this.rep.find({
+      order: { data_inicial: 'ASC' },
+      relations: ['sala', 'sala.predio'],
+      where: {
+        data_inicial: Raw((alias) => `cast(${alias} as DATE) >= :dataInicial`, {
+          dataInicial: dataAtual.format('YYYY-MM-DD'),
+        }),
+        data_final: Raw((alias) => `cast(${alias} as DATE) <= :dataFinal`, {
+          dataFinal: dataAtual.format('YYYY-MM-DD'),
+        }),
+      },
+    });
+    return query;
+  }
 
   async getAll(): Promise<AgendarEntity[]> {
     const agenda = await this.rep.find({ order: { data_final: 'ASC' } });
@@ -70,11 +97,14 @@ export class AgendarService {
   async checkDate(dto: CriarAgendardto): Promise<void> {
     if (moment(dto.data_inicial).isAfter(dto.data_final)) {
       throw new HttpException(
-        { erro: 'Data inválida: data final deverá ser maior que à data inicial!' },
+        {
+          erro: 'Data inválida: data final deverá ser maior que à data inicial!',
+        },
         HttpStatus.BAD_REQUEST,
       );
     }
   }
+
   async checkAgenda(dto: CriarAgendardto, Id?: number): Promise<void> {
     const betweenDataInicial =
       ':DATA_INICIAL BETWEEN agendamento.data_inicial AND  agendamento.data_final';
@@ -106,8 +136,8 @@ export class AgendarService {
     return novaDataHora;
   }
 
-  private converteHoraParaConsulta(dataHora:Date): string{
+  private converteHoraParaConsulta(dataHora: Date): string {
     dataHora.setHours(dataHora.getHours() - 3);
-    return ""
+    return '';
   }
 }

@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { AgendarEntity } from 'src/agendar/agendar.entity';
+import { PredioEntity } from 'src/predio/predio.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('sala')
 export class SalaEntity {
@@ -32,6 +41,13 @@ export class SalaEntity {
   @Column({ name: 'capacidade' })
   capacidade: number;
 
-  @Column({ name: 'caracteristicas'})
+  @Column({ name: 'caracteristicas' })
   caracteristicas: string;
+
+  @OneToMany(() => AgendarEntity, (agendar) => agendar.sala)
+  agendas: AgendarEntity[];
+
+  @ManyToOne(() => PredioEntity, (predio) => predio.salas)
+  @JoinColumn({ name: 'predio_id' })
+  predio: PredioEntity;
 }

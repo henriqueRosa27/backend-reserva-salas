@@ -5,71 +5,72 @@ import { PredioEntity } from './predio.entity';
 
 @Injectable()
 export class PredioService {
-    constructor(
-        @InjectRepository(PredioEntity)
-        private readonly rep: Repository<PredioEntity>,
-      ) {}
-    
-      async getAll(): Promise<PredioEntity[]> {
-        const predios = await this.rep.find({ order: { nome: 'ASC' } });
-        return predios;
-      }
-    
-      async findById(id: number): Promise<PredioEntity> {
-        const predio = await this.rep.findOne({ where: { id } });
-    
-        if (predio) return predio;
-    
-        throw new HttpException(
-          { erro: 'Predio não existe' },
-          HttpStatus.NOT_FOUND,
-        );
-      }
-    
-      async create(predio: PredioEntity): Promise<PredioEntity> {
-        await this.checkName(predio.nome);
-        const entity = await this.rep.save(predio);
-    
-        return entity;
-      }
-       async altera_status(predio: PredioEntity, id: number): Promise<PredioEntity> {
-        const entitySalva = await this.findById(id);
-    
-        entitySalva.status = predio.status;
-        const entity = await this.rep.save(entitySalva);
-        return entity;
+  constructor(
+    @InjectRepository(PredioEntity)
+    private readonly rep: Repository<PredioEntity>,
+  ) {}
 
-      }
-    
-      async update(predio: PredioEntity, id: number): Promise<PredioEntity> {
-        const entitySalva = await this.findById(id);
-        await this.checkName(predio.nome, id);
-        entitySalva.nome = predio.nome;
-        entitySalva.status = predio.status;
-        const entity = await this.rep.save(entitySalva);
-        return entity;
-      }
-    
-      async delete(id: number): Promise<null> {
-        const entitySalva = await this.findById(id);
-    
-        await this.rep.remove(entitySalva);
-    
-        return null;
-      }
+  async getAll(): Promise<PredioEntity[]> {
+    const predios = await this.rep.find({ order: { nome: 'ASC' } });
+    return predios;
+  }
 
-      async checkName(nome: string, id?: number): Promise<void> {
-        let query = this.rep.createQueryBuilder("predio").where("predio.nome=:NOME", {NOME: nome});
-        if(id) {
-          query = query.andWhere("predio.id<>:ID", {ID: id});
-        }
-        const result = await query.getOne()
-        
-        if(result) {
-          throw new HttpException(
-            { erro: 'Predio já existe!' },
-            HttpStatus.BAD_REQUEST,
-          );
-        }
-      }
+  async findById(id: number): Promise<PredioEntity> {
+    const predio = await this.rep.findOne({ where: { id } });
+
+    if (predio) return predio;
+
+    throw new HttpException(
+      { erro: 'Predio não existe' },
+      HttpStatus.NOT_FOUND,
+    );
+  }
+
+  async create(predio: PredioEntity): Promise<PredioEntity> {
+    await this.checkName(predio.nome);
+    const entity = await this.rep.save(predio);
+
+    return entity;
+  }
+  async altera_status(predio: PredioEntity, id: number): Promise<PredioEntity> {
+    const entitySalva = await this.findById(id);
+
+    entitySalva.status = predio.status;
+    const entity = await this.rep.save(entitySalva);
+    return entity;
+  }
+
+  async update(predio: PredioEntity, id: number): Promise<PredioEntity> {
+    const entitySalva = await this.findById(id);
+    await this.checkName(predio.nome, id);
+    entitySalva.nome = predio.nome;
+    entitySalva.status = predio.status;
+    const entity = await this.rep.save(entitySalva);
+    return entity;
+  }
+
+  async delete(id: number): Promise<null> {
+    const entitySalva = await this.findById(id);
+
+    await this.rep.remove(entitySalva);
+
+    return null;
+  }
+
+  async checkName(nome: string, id?: number): Promise<void> {
+    let query = this.rep
+      .createQueryBuilder('predio')
+      .where('predio.nome=:NOME', { NOME: nome });
+    if (id) {
+      query = query.andWhere('predio.id<>:ID', { ID: id });
+    }
+    const result = await query.getOne();
+
+    if (result) {
+      throw new HttpException(
+        { erro: 'Predio já existe!' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
 }
