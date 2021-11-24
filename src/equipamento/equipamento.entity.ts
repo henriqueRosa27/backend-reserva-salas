@@ -24,8 +24,8 @@ export class EquipamentoEntity {
   @ManyToMany(() => AgendarEntity, (agendamentos) => agendamentos.equipamentos)
   @JoinTable({
     name: 'agendamento_equipamento',
-    joinColumn: { name: 'agendamento_id' },
-    inverseJoinColumn: { name: 'equipamento_id' },
+    joinColumn: { name: 'equipamento_id' },
+    inverseJoinColumn: { name: 'agendamento_id' },
   })
   agendamentos: AgendarEntity[];
 }
