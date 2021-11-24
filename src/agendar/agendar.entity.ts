@@ -1,10 +1,13 @@
 import { EquipamentoEntity } from 'src/equipamento/equipamento.entity';
+import { SalaEntity } from 'src/sala/sala.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   ManyToMany,
   JoinTable,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity('agendamento')
@@ -46,4 +49,8 @@ export class AgendarEntity {
     inverseJoinColumn: { name: 'agendamento_id' },
   })
   equipamentos: EquipamentoEntity[];
+
+  @ManyToOne(() => SalaEntity, (sala) => sala.agendas)
+  @JoinColumn({ name: 'sala_id' })
+  sala: SalaEntity;
 }

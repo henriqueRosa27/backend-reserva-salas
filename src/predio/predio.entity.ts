@@ -1,13 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { SalaEntity } from 'src/sala/sala.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('predio')
 export class PredioEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'nome'})
+  @Column({ name: 'nome' })
   nome: string;
 
-  @Column({ name: 'status'})
+  @Column({ name: 'status' })
   status: boolean;
+
+  @OneToMany(() => SalaEntity, (sala) => sala.predio)
+  salas: SalaEntity[];
 }
