@@ -1,22 +1,21 @@
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    Param,
-    Post,
-    Put,
-  } from '@nestjs/common';
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ValidationNumberPipe, ValidationPipe } from 'src/validation.pipe';
 import { PredioEntity } from './predio.entity';
 import { PredioService } from './predio.service';
 import { predioValidation, altera_statusValidation } from './predio.validation';
 
-
 @Controller('predios')
 export class PredioController {
-    constructor(private readonly service: PredioService) {}
+  constructor(private readonly service: PredioService) {}
 
   @Get()
   async getAll(): Promise<PredioEntity[]> {

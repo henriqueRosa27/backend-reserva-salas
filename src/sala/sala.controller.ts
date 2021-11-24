@@ -1,13 +1,13 @@
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpCode,
-    Param,
-    Post,
-    Put,
-  } from '@nestjs/common';
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ValidationNumberPipe, ValidationPipe } from 'src/validation.pipe';
 import { SalaEntity } from './sala.entity';
 import { SalaService } from './sala.service';
@@ -15,7 +15,7 @@ import { salaValidation, altera_statusValidation } from './sala.validation';
 
 @Controller('salas')
 export class SalaController {
-    constructor(private readonly service: SalaService) {}
+  constructor(private readonly service: SalaService) {}
 
   @Get()
   async getAll(): Promise<SalaEntity[]> {

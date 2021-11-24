@@ -25,19 +25,17 @@ export class AgendarService {
   async getDados(): Promise<AgendarEntity[]> {
     const dataAtual = moment(new Date());
 
-    const query = await this.rep.find({
-      order: { data_inicial: 'ASC' },
-      relations: ['sala', 'sala.predio'],
-      where: {
-        data_inicial: Raw((alias) => `cast(${alias} as DATE) >= :dataInicial`, {
-          dataInicial: dataAtual.format('YYYY-MM-DD'),
-        }),
-        data_final: Raw((alias) => `cast(${alias} as DATE) <= :dataFinal`, {
-          dataFinal: dataAtual.format('YYYY-MM-DD'),
-        }),
-      },
-    });
-    return query;
+    const dados = this.rep
+      .createQueryBuilder('a')
+      .innerJoinAndSelect('a.sala', 's')
+      .innerJoinAndSelect('s.predio', 'p')
+      .where(
+        ':DATA BETWEEN cast(a.data_inicial as DATE) AND cast(a.data_final as DATE)',
+        { DATA: dataAtual.format('YYYY-MM-DD') },
+      )
+      .getMany();
+
+    return dados;
   }
 
   async getAll(): Promise<AgendarEntity[]> {
