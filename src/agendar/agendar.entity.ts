@@ -45,8 +45,8 @@ export class AgendarEntity {
   )
   @JoinTable({
     name: 'agendamento_equipamento',
-    joinColumn: { name: 'equipamento_id' },
-    inverseJoinColumn: { name: 'agendamento_id' },
+    joinColumn: { name: 'agendamento_id' },
+    inverseJoinColumn: { name: 'equipamento_id' },
   })
   equipamentos: EquipamentoEntity[];
 
