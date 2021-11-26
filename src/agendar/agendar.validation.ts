@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import { number } from 'yup/lib/locale';
 
 export const AgendarValidation = Yup.object({
   data_inicial: Yup.date().required('Campo data inicial obrigatório'),

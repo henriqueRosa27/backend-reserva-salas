@@ -29,13 +29,38 @@ export class AgendarService {
       .createQueryBuilder('a')
       .innerJoinAndSelect('a.sala', 's')
       .innerJoinAndSelect('s.predio', 'p')
+      .innerJoinAndSelect('a.equipamentos', 'e')
       .where(
         ':DATA BETWEEN cast(a.data_inicial as DATE) AND cast(a.data_final as DATE)',
         { DATA: dataAtual.format('YYYY-MM-DD') },
       )
       .getMany();
+      if ((await dados) .length !=0) return dados;
+      
+      throw new HttpException(
+        { erro: 'Não possui salas agendadas nesta data' },
+        HttpStatus.NOT_FOUND,
+      );
 
-    return dados;
+  }
+  async getData(data: string): Promise<AgendarEntity[]> {
+    const dados = this.rep
+    
+      .createQueryBuilder('a')
+      .innerJoinAndSelect('a.equipamentos', 'e')
+      .innerJoinAndSelect('a.sala', 's')
+      .innerJoinAndSelect('s.predio', 'p')
+      .where(
+        ':DATA BETWEEN cast(a.data_inicial as DATE) AND cast(a.data_final as DATE)',
+        {DATA: data},
+      )
+      .getMany();
+      if ((await dados) .length !=0) return dados;
+      
+      throw new HttpException(
+        { erro: 'Não possui salas agendadas nesta data' },
+        HttpStatus.NOT_FOUND,
+      );
   }
 
   async getAll(): Promise<AgendarEntity[]> {

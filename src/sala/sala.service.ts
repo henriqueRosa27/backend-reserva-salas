@@ -11,7 +11,10 @@ export class SalaService {
   ) {}
 
   async getAll(): Promise<SalaEntity[]> {
-    const salas = await this.rep.find({ order: { nome: 'ASC' } });
+    const salas = await this.rep.find({
+      order: { nome: 'ASC' },
+      relations: ['predio'],
+    });
     return salas;
   }
 

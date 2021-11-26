@@ -16,7 +16,10 @@ export class PredioService {
   }
 
   async findById(id: number): Promise<PredioEntity> {
-    const predio = await this.rep.findOne({ where: { id } });
+    const predio = await this.rep.findOne({
+      where: { id },
+      relations: ['salas'],
+      });
 
     if (predio) return predio;
 
