@@ -26,6 +26,11 @@ export class AgendaController {
   async getDados(): Promise<AgendarEntity[]> {
     return this.service.getDados();
   }
+  @Get(':data')
+  async getData(@Param('data') data: string
+  ): Promise<AgendarEntity[]> {
+    return this.service.getData(data);
+  }
 
   @Get()
   async getAll(): Promise<AgendarEntity[]> {
