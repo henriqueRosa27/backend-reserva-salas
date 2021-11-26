@@ -25,7 +25,7 @@ export class AgendarService {
   async getDados(): Promise<AgendarEntity[]> {
     const dataAtual = moment(new Date());
 
-    const dados = this.rep
+    return await this.rep
       .createQueryBuilder('a')
       .innerJoinAndSelect('a.sala', 's')
       .innerJoinAndSelect('s.predio', 'p')
@@ -35,32 +35,27 @@ export class AgendarService {
         { DATA: dataAtual.format('YYYY-MM-DD') },
       )
       .getMany();
-      if ((await dados) .length !=0) return dados;
-      
-      throw new HttpException(
-        { erro: 'Não possui salas agendadas nesta data' },
-        HttpStatus.NOT_FOUND,
-      );
-
   }
-  async getData(data: string): Promise<AgendarEntity[]> {
-    const dados = this.rep
-    
+  async getData(data: Date): Promise<AgendarEntity[]> {
+    const dataConvertida = moment(data);
+
+    if (!dataConvertida.isValid()) {
+      throw new HttpException(
+        { erro: 'Data inválida' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return await this.rep
       .createQueryBuilder('a')
       .innerJoinAndSelect('a.equipamentos', 'e')
       .innerJoinAndSelect('a.sala', 's')
       .innerJoinAndSelect('s.predio', 'p')
       .where(
         ':DATA BETWEEN cast(a.data_inicial as DATE) AND cast(a.data_final as DATE)',
-        {DATA: data},
+        { DATA: dataConvertida.format('YYYY-MM-DD') },
       )
       .getMany();
-      if ((await dados) .length !=0) return dados;
-      
-      throw new HttpException(
-        { erro: 'Não possui salas agendadas nesta data' },
-        HttpStatus.NOT_FOUND,
-      );
   }
 
   async getAll(): Promise<AgendarEntity[]> {
