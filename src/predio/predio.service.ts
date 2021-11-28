@@ -15,11 +15,20 @@ export class PredioService {
     return predios;
   }
 
+  async getCont(id: number): Promise<Object> {
+    const predio = await this.rep.findOne({
+      where: { id },
+      relations: ['salas'],
+    });
+    const obj = { quantidade: predio.salas.length };
+    return obj;
+  }
+
   async findById(id: number): Promise<PredioEntity> {
     const predio = await this.rep.findOne({
       where: { id },
       relations: ['salas'],
-      });
+    });
 
     if (predio) return predio;
 
@@ -35,6 +44,7 @@ export class PredioService {
 
     return entity;
   }
+
   async altera_status(predio: PredioEntity, id: number): Promise<PredioEntity> {
     const entitySalva = await this.findById(id);
 

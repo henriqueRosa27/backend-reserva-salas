@@ -22,6 +22,13 @@ export class PredioController {
     return this.service.getAll();
   }
 
+  @Get(':id/cont')
+  async getCont(
+    @Param('id', ValidationNumberPipe) id: number,
+  ): Promise<Object> {
+    return await this.service.getCont(id);
+  }
+
   @Get(':id')
   async finById(
     @Param('id', ValidationNumberPipe) id: number,
