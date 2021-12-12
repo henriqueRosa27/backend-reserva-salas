@@ -1,15 +1,6 @@
 import { HttpException, HttpStatus, Injectable, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  Connection,
-  createQueryBuilder,
-  getRepository,
-  LessThanOrEqual,
-  MoreThanOrEqual,
-  Raw,
-  Repository,
-  RepositoryNotFoundError,
-} from 'typeorm';
+import { Repository } from 'typeorm';
 import { AgendarEntity } from './agendar.entity';
 import { CriarAgendardto } from './agendar.dto';
 import { EquipamentoEntity } from 'src/equipamento/equipamento.entity';

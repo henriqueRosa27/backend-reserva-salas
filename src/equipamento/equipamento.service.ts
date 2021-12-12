@@ -12,7 +12,7 @@ export class EquipamentoService {
 
   async getAll(): Promise<EquipamentoEntity[]> {
     const equipamentos = await this.rep.find({
-      order: { nome_equipamentos: 'ASC' },
+      order: { nome: 'ASC' },
     });
     return equipamentos;
   }
@@ -29,7 +29,7 @@ export class EquipamentoService {
   }
 
   async create(equipamento: EquipamentoEntity): Promise<EquipamentoEntity> {
-    await this.checkName(equipamento.nome_equipamentos);
+    await this.checkName(equipamento.nome);
     const entity = await this.rep.save(equipamento);
 
     return entity;
@@ -52,7 +52,7 @@ export class EquipamentoService {
   ): Promise<EquipamentoEntity> {
     const entitySalva = await this.findById(id);
 
-    entitySalva.nome_equipamentos = equipamento.nome_equipamentos;
+    entitySalva.nome = equipamento.nome;
     entitySalva.quantidade = equipamento.quantidade;
     entitySalva.status = equipamento.status;
     const entity = await this.rep.save(entitySalva);

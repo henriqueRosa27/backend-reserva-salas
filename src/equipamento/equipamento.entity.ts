@@ -13,7 +13,7 @@ export class EquipamentoEntity {
   id: number;
 
   @Column({ name: 'nome_equipamentos' })
-  nome_equipamentos: string;
+  nome: string;
 
   @Column({ name: 'quantidade' })
   quantidade: number;

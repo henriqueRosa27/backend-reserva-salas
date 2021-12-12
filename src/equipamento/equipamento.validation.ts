@@ -1,14 +1,9 @@
 import * as Yup from 'yup';
 
 export const EquipamentoValidation = Yup.object({
-  nome_equipamentos: Yup.string()
+  nome: Yup.string()
     .required('Campo nome obrigatório')
     .max(30, 'Máximo de 30 caracteres no campo nome'),
-
-  /*quantidade: Yup.array().min(1, 'Campo quantidade não pode estar vazio').of(Yup.number())
-    .required('Campo quantiade obrigatório')
-    .max(99, 'Máximo de 99 equipamentos no campo quantidade'),
-    //.positive('Somente valores positivos no campo quantidade'), Não é aceito quando se possui um array*/
 
   quantidade: Yup.number()
     .required('Campo quantiade obrigatório')
