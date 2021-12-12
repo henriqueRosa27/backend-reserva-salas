@@ -11,8 +11,11 @@ export class PredioService {
   ) {}
 
   async getAll(): Promise<PredioEntity[]> {
-    const predios = await this.rep.find({ order: { nome: 'ASC' } });
+    const predios = await this.rep.createQueryBuilder('predio')
+    .loadRelationCountAndMap('predio.qtd_salas', 'predio.salas',)
+    .getMany();
     return predios;
+   
   }
 
   async findById(id: number): Promise<PredioEntity> {
