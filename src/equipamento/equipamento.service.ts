@@ -69,9 +69,9 @@ export class EquipamentoService {
   async checkName(nome_equi: string, id?: number): Promise<void> {
     let query = this.rep
       .createQueryBuilder('equipamento')
-      .where('equipamento.nome_equipamentos=:NOME', { NOME: nome_equi });
+      .where('equipamento.nome_equipamento=:NOME', { NOME: nome_equi });
     if (id) {
-      query = query.andWhere('equipamentos.id<>:ID', { ID: id });
+      query = query.andWhere('equipamento.id<>:ID', { ID: id });
     }
     const result = await query.getOne();
 

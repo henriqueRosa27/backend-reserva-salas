@@ -7,12 +7,12 @@ import {
   JoinTable,
 } from 'typeorm';
 
-@Entity('equipamentos')
+@Entity('equipamento')
 export class EquipamentoEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'nome_equipamentos' })
+  @Column({ name: 'nome_equipamento' })
   nome: string;
 
   @Column({ name: 'quantidade' })
