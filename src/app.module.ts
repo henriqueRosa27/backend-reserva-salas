@@ -19,9 +19,6 @@ const configDatabase: ConnectionOptions = {
   port: 5432,
   username: 'postgres',
   password: '@Amf1536',
-  ssl: {
-    rejectUnauthorized: false,
-  },
   entities: [PredioEntity, SalaEntity, EquipamentoEntity, AgendarEntity],
 };
 
