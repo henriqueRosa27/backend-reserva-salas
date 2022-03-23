@@ -15,10 +15,10 @@ import { AgendarModule } from './agendar/agendar.module';
 const configDatabase: ConnectionOptions = {
   type: 'postgres',
   host: '192.168.2.100',
-  database: 'reserva-salas',
+  database: 'reserva_salas',
   port: 5432,
-  username: 'postgres',
-  password: '@Amf1536',
+  username: 'reserva_salas',
+  password: 'bKJoH@m&',
   entities: [PredioEntity, SalaEntity, EquipamentoEntity, AgendarEntity],
 };
 
