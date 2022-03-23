@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  reserva-salas-backend:
+    container_name: reserva-salas-backend
+    build:
+      context: .
+      target: production
+      dockerfile: ./Dockerfile
+    command: npm run start:prod
+    ports:
+      - 10001:3333
+    restart: always
