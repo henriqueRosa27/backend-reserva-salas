@@ -14,11 +14,11 @@ import { AgendarModule } from './agendar/agendar.module';
 
 const configDatabase: ConnectionOptions = {
   type: 'postgres',
-  host: 'ec2-35-171-171-27.compute-1.amazonaws.com',
-  database: 'd426unnejsbpip',
+  host: '192.168.2.100',
+  database: 'reserva-salas',
   port: 5432,
-  username: 'dhfdkqoiqdiozs',
-  password: '63133079f88bb9d34bb7edf5ecac7d7530e45af57d9429cd3f5db96858e4a7f6',
+  username: 'postgres',
+  password: '@Amf1536',
   ssl: {
     rejectUnauthorized: false,
   },
